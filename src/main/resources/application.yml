@@ -1,0 +1,5 @@
+server:
+  port : 8081
+
+iseletkov:
+  count_of_test_objects: 5
