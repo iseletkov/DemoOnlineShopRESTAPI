@@ -1,83 +1,66 @@
 package ru.studyit.demoonlineshoprest.rest
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.env.Environment
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.*
-import ru.studyit.demoonlineshoprest.model.CTest
-import javax.annotation.PostConstruct
+import ru.studyit.demoonlineshoprest.model.CUser
+import ru.studyit.demoonlineshoprest.repositories.IRepositoryUsers
+import java.time.LocalDate
+import java.util.*
 
 
 @RestController
 @RequestMapping("/users")
 class CControllerUsers
 {
-    @Value("\${iseletkov.count_of_test_objects}")
-    private val count                       : Int
-                                            = 2
-
     @Autowired
     private val env                         : Environment?
                                             = null
+    @Autowired
+    private lateinit var repositoryUsers    : IRepositoryUsers
 
-    val list                                = ArrayList<CTest>()
 
-    @PostConstruct
-    fun initializeSetting()
+    @GetMapping("")
+    fun getAll()                            : List<CUser>
     {
-        val x                               = (env?.getProperty("iseletkov.count_of_test_objects"))?.toInt()?:0
-        for (i in 0 until x)
-        {
-            list.add(CTest(test2=i))
-        }
-    }
-
-    @GetMapping
-    fun hello() : String
-    {
-        return "Hello word!"
-    }
-
-    @GetMapping("/test")
-    fun testData() : List<CTest>
-    {
-        return list
+        return repositoryUsers.findAll()
     }
 
     @GetMapping(
-            value                           = ["/test"],
-            params                          = ["index"]
+            params                          = ["id"]
     )
-    fun testData(
-            @RequestParam index             : Int
-    )                                       : CTest
+    fun getById(
+            @RequestParam id                : UUID
+    )                                       : CUser?
     {
-        if (index<0 || index>=list.size)
-            throw IllegalArgumentException("Нет элемента с таким номером!")
-        return list[index]
+        return repositoryUsers.findByIdOrNull(id)
     }
+
     @GetMapping(
-            value                           = ["/test"],
-            params                          = ["test1"]
+            params                          = ["sex"]
     )
-    fun getByTest1(
-            @RequestParam test1             : String
-    )                                       : CTest?
+    fun getBySex(
+            @RequestParam sex               : Boolean
+    )                                       : List<CUser>
     {
-        for (test in list)
-        {
-            if (test.test1 == test1)
-                return test
-        }
-
-        return null
-    }
-    @PostMapping("/test")
-    fun createNew(
-         @RequestBody item                  : CTest
-    )
-    {
-        list.add(item)
+        return repositoryUsers.findBySex(sex)
     }
 
+    @GetMapping(
+            params                          = ["date_of_birth"]
+    )
+    fun getOlderThan(
+            @RequestParam
+//            @DateTimeFormat(
+//                    iso                     = DateTimeFormat.ISO.DATE
+//            )
+            @DateTimeFormat(
+                    pattern                 = "dd.MM.yyyy")
+            date_of_birth                   : LocalDate
+    )                                       : List<CUser>
+    {
+        return repositoryUsers.findOlderThan(date_of_birth)
+    }
 }

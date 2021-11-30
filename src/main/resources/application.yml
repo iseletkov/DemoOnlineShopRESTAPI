@@ -3,3 +3,21 @@ server:
 
 iseletkov:
   count_of_test_objects: 5
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+#    properties:
+#      hibernate.jdbc.lob.non_contextual_creation=true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demoonlineshop
+    username: demoonlineshop
+    password: 123
+
+  sql:
+    init:
+      platform: postgres
