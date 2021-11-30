@@ -1,7 +1,6 @@
 package ru.studyit.demoonlineshoprest.model;
 
 import org.hibernate.annotations.GenericGenerator;
-import ru.studyit.demoonlineshoprest.model.COrder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
