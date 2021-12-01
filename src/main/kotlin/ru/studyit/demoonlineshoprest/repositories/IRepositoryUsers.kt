@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.util.*
 
 @Repository
-interface IRepositoryUsers : JpaRepository<CUser, UUID>
+interface IRepositoryUsers                  : JpaRepository<CUser, UUID>
 {
     fun findBySex(
         sex                                 : Boolean

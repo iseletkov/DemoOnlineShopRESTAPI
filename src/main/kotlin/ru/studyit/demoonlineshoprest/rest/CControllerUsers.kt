@@ -63,4 +63,18 @@ class CControllerUsers
     {
         return repositoryUsers.findOlderThan(date_of_birth)
     }
+    @PostMapping
+    fun saveUser(
+        @RequestBody user                   : CUser
+    )
+    {
+        repositoryUsers.save(user)
+    }
+    @DeleteMapping
+    fun deleteUser(
+            @RequestBody user               : CUser
+    )
+    {
+        repositoryUsers.delete(user)
+    }
 }

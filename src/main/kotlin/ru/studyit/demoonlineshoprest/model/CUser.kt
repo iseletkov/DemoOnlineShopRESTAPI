@@ -1,6 +1,9 @@
 package ru.studyit.demoonlineshoprest.model
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDate
 import java.util.*
@@ -8,6 +11,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name                                 = "users")
+//@JsonIgnoreProperties(value = [ "orders" ])
 class CUser(
     @Id
     @GenericGenerator(
@@ -43,12 +47,17 @@ class CUser(
     var dateOfBirth                         : LocalDate?
                                             = null,
 
-
-
     @OneToMany(
         mappedBy                            = "owner",
-        fetch                               = FetchType.EAGER
+        fetch                               = FetchType.EAGER,
+        cascade                             = [CascadeType.REMOVE],
+        orphanRemoval                       = true
     )
+    //@JsonIgnore
+    @JsonIdentityReference(
+            alwaysAsId                      = true
+    )
+
     var orders                              : MutableList<COrder>
                                             = mutableListOf()
 )
