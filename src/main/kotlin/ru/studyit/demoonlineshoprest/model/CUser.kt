@@ -41,6 +41,12 @@ class CUser(
                                             = "",
 
     @Column(
+        name                                = "password"
+    )
+    var password                            : String
+                                            = "",
+
+    @Column(
         name                                = "date_of_birth",
         columnDefinition                    = "DATE"
     )

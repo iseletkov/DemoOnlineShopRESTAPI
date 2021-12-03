@@ -11,6 +11,10 @@ import java.util.*
 @Repository
 interface IRepositoryUsers                  : JpaRepository<CUser, UUID>
 {
+    fun findByLogin(
+            login                           : String
+    )                                       : CUser?
+
     fun findBySex(
         sex                                 : Boolean
     )                                       : List<CUser>
