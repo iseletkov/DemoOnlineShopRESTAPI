@@ -2,30 +2,14 @@ package ru.studyit.demoonlineshoprest.model
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDate
-import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name                                 = "users")
 //@JsonIgnoreProperties(value = [ "orders" ])
 class CUser(
-    @Id
-    @GenericGenerator(
-        name                                = "UUIDGenerator",
-        strategy                            = "uuid2"
-    )
-    @GeneratedValue(
-        generator                           = "UUIDGenerator"
-    )
-    @Column(
-        name                                = "id"
-    )
-    var id                                  : UUID?
-                                            = null,
+
 
     @Column(
         name                                = "sex"
@@ -65,6 +49,24 @@ class CUser(
     )
 
     var orders                              : MutableList<COrder>
+                                            = mutableListOf(),
+
+    @ManyToMany
+    @JoinTable(
+        name                                = "user_roles",
+        joinColumns                         = [
+            JoinColumn(
+                name                        = "user_id")
+        ],
+        inverseJoinColumns                  = [
+            JoinColumn(
+                name                        = "role_id")
+        ]
+    )
+    @JsonIdentityReference(
+        alwaysAsId                          = true
+    )
+    var roles                               : MutableList<CRole>
                                             = mutableListOf()
-)
+)                                           : CObject()
 
