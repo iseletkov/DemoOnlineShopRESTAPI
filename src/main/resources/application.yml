@@ -21,3 +21,17 @@ spring:
   sql:
     init:
       platform: postgres
+
+keycloak:
+  authServerUrl: http://localhost:8080/auth
+  sslRequired: external
+  realm: demoonlineshop
+  resource: demoonlineshoprestapi
+  publicClient: true
+  principalAttribute: preferred_username
+
+#  security-constraints[0]:
+#    authRoles[0]: user
+#    securityCollections[0]:
+#      patterns[0]: /orders/*
+
