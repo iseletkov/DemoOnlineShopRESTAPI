@@ -1,8 +1,8 @@
 server:
   port : 8081
 
-iseletkov:
-  count_of_test_objects: 5
+#iseletkov:
+#  count_of_test_objects: 5
 
 spring:
   jpa:
@@ -29,6 +29,9 @@ keycloak:
   resource: demoonlineshoprestapi
   publicClient: true
   principalAttribute: preferred_username
+  useResourceRoleMappings: true
+  cors: true
+  enabled: true
 
 #  security-constraints[0]:
 #    authRoles[0]: user

@@ -103,17 +103,17 @@ class CConfigSecurity                       : KeycloakWebSecurityConfigurerAdapt
     fun configureGlobal(
         auth                                : AuthenticationManagerBuilder
     ) {
-//        val keycloakAuthenticationProvider  = keycloakAuthenticationProvider()
-//        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(
-//            SimpleAuthorityMapper())
-        //auth.authenticationProvider(keycloakAuthenticationProvider)
-        auth.authenticationProvider(keycloakAuthenticationProvider())
+        val keycloakAuthenticationProvider  = keycloakAuthenticationProvider()
+        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(
+            SimpleAuthorityMapper())
+        auth.authenticationProvider(keycloakAuthenticationProvider)
+        //auth.authenticationProvider(keycloakAuthenticationProvider())
     }
 
     @Bean
     override fun sessionAuthenticationStrategy(
 
-    )                                       : SessionAuthenticationStrategy?
+    )                                       : SessionAuthenticationStrategy
     {
         return RegisterSessionAuthenticationStrategy(
             SessionRegistryImpl())
